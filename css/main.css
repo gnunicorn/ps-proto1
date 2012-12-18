@@ -1,0 +1,23 @@
+
+#navbar {
+	margin-bottom: 15px;
+}
+
+#main {
+	margin-top: 50px;
+}
+
+#teaser {
+	background: url('../img/content/business_people2.jpg');
+	background-size:100% 100%;
+	-webkit-background-origin:border-box; /* Safari */
+	background-origin:border-box;
+	background-repeat: none;
+	height: 375px;
+	margin-bottom: 50px;
+}
+#teaser-box .well{
+	margin-top: 180px;
+	background: rgb(150, 150, 150) transparent; /* default fallback */
+	background: rgba(150, 150, 150, 0.35); /* nice browsers */
+}

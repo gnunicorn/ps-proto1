@@ -19,28 +19,70 @@
     <body>
 
         <script type="text/template" id="tmpl-main">
-            <div class="hero-unit">
-                <h1>Welcome!</h1>
-                <p>Startin Text</p>
-                <p>Let`s get things done</p>
-                <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+          <div class="row">
+              <div id="teaser" class="span12 well">
+                <div id="teaser-box" class="span5 offset6">
+                  <div class="well">
+                    <form>
+                      <label for="creditInput">What amount are you looking for?</label>
+                      <div class="input-prepend input-append">
+                        <span class="add-on">€</span>
+                        <input type="text" id="creditInput" class="input-medium" style="text-align:right" placeHolder="e.g. 1000000" /><button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i>&nbsp;Search</button>
+                      </div>
+                    </form>
+                    <small>or <a href="#learnMore">Learn more about PeerStreet</a></small>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          <div class="row">
+            <div id="myCarousel" class="carousel span12 well slide">
+              <!-- Carousel items -->
+              <div class="carousel-inner">
+                <div class="active item">
+                  <img src="http://www.opentechschool.org/images/team/simon.jpg" class="img-polaroid offset1 span2">
+                  <div class="span8">
+                    <h3>Simon Jockers, CEO at <a href="#">Wellington Inc.</a></h3>
+                    <blockquote>
+                    Pancetta biltong meatball, capicola pork belly rump cow short loin spare ribs meatloaf. Tri-tip jowl corned beef pig salami, shankle t-bone venison meatball ham hock boudin kielbasa. Fatback chuck shank pork chop shoulder. Pork loin short loin pork belly kielbasa sirloin venison meatloaf doner beef chicken strip steak. Venison boudin bacon filet mignon. Meatball tongue meatloaf tenderloin prosciutto turducken cow jerky ribeye shoulder pancetta pig spare ribs.
+                    </blockquote>
+                  </div>
+                </div>
+                <div class="item">
+
+                  <img src="http://www.opentechschool.org/images/team/ben.jpg" class="img-polaroid offset1 span2">
+                  <div class="span8">
+                    <h3>Benjamin Kampmann, CEO at <a href="#">HEPburn AG</a></h3>
+                    <blockquote>Short loin shankle leberkas, sausage ball tip jowl spare ribs meatloaf turkey ham boudin pork loin. Ham brisket pancetta pork loin beef ribs jowl bacon drumstick ribeye ham hock capicola biltong spare ribs shank pork chop. Hamburger jowl tail short loin pork belly kielbasa beef beef ribs tenderloin. Pork tri-tip bresaola beef ribs flank. Beef ribs flank jowl corned beef leberkas sirloin hamburger drumstick boudin swine.
+                    </blockquote>
+                  </div>
+                </div>
+                <div class="item">
+                  <img src="http://www.opentechschool.org/images/team/aleks.jpg" class="img-polaroid offset1 span2">
+                  <div class="span8">
+                    <h3>Andrea Michaels, President at <a href="#">CoÜb GmbH</a></h3>
+                    <blockquote>Bacon pastrami biltong pork. Beef ribs short loin jowl boudin, pork loin chicken sausage venison capicola. Ham tail fatback andouille leberkas turducken spare ribs pork short loin pork belly rump short ribs filet mignon. Venison biltong pork chop pancetta, ham rump pork loin pork belly frankfurter leberkas jowl chicken drumstick doner shank. Brisket leberkas meatloaf, tri-tip venison short ribs strip steak hamburger cow sirloin salami spare ribs chicken shankle.
+                    </blockquote>
+                  </div>
+                </div>
+              </div>
+              <!-- Carousel nav -->
+              <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
+              <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
             </div>
+          </div>
 
             <div class="row">
-                <div class="span4">
-                    <h2>Books</h2>
-                    <p>There are plenty of programming and hacking books out there. Not all are good and it sometimes gets overwhelming. Here you can find those books that helped us learn and we recommend reading.</p>
-                    <p><a class="btn" href="#books/">Recommended Books &raquo;</a></p>
+                <div class="span8">
+                    <h2>How it works</h2>
+                    <p>Bacon ipsum dolor sit amet t-bone biltong shoulder, tenderloin hamburger andouille pork chop short loin shankle ham strip steak kielbasa sausage chicken turkey. Ham frankfurter short loin tail turkey shoulder. Bresaola pig boudin turducken drumstick andouille pork pastrami spare ribs cow beef ribs turkey tenderloin hamburger.</p>
+                    <p><a class="btn" href="#learnMore/">Learn More &raquo;</a></p>
                 </div>
                 <div class="span4">
-                    <h2>Videos</h2>
-                    <p>Plenty of talks on tech topic help us learn every. And while there are a bunch which surface up through to us via social media and our channels not all are known to every. So we want to recommend some.</p>
-                    <p><a class="btn" href="#video/">Recommended Videos &raquo;</a></p>
-                </div>
-                <div class="span4">
-                    <h2>Online Courses</h2>
-                    <p>More and more online courses poping up it becomes hard to choose. Those are the online courses that helped us and we`d recommend</p>
-                    <p><a class="btn" href="#courses/">Recommended Courses &raquo;</a></p>
+                    <h2>Latest News</h2>
+                    <p>Tri-tip ground round pig brisket short loin turducken. Kielbasa pork belly flank bresaola, drumstick jowl shank prosciutto ribeye short ribs turkey shoulder.</p>
+                    <p><a class="btn" href="#courses/">Go to blog &raquo;</a></p>
                </div>
             </div>
         </script>
@@ -52,26 +94,20 @@
 
         <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
 
-        <div id="navbar" class="navbar">
+        <div id="navbar" class="navbar navbar-static-top">
           <div class="navbar-inner">
             <div class="container">
-              <a class="brand" href="#">recommendly</a>
+              <a class="brand" href="#">PeerStreet</a>
               <ul class="nav" id="main-nav">
-                  <li id="home-menu" class="active"><a href="#/">Home</a></li>
-                  <li id="books-menu"><a href="#books/">Books</a></li>
-                  <li id="videos-menu"><a href="#videos/">Videos</a></li>
-                  <li id="courses-menu"><a href="#courses/">Courses</a></li>
               </ul>
-              <div id="search-form" class="offset7">
-                <form class="navbar-search">
-                    <input type="text" class="search-query" name="search" placeholder="Search">
-                </form>
               </div>
               <ul class="nav pull-right" id="login-bar">
                 </ul>
             </div>
           </div>
         </div>
+
+
 
         <div id="generalModal" class="modal hide fade" tabindex="-1" role="dialog">
           <div class="modal-header">
@@ -94,7 +130,7 @@
             <hr>
 
             <footer>
-                <p>&copy; Nothing 2012</p>
+                <p>&copy; PeerStreet UG (haftungsbeschränkt) 2012</p>
             </footer>
 
         </div> <!-- /container -->
