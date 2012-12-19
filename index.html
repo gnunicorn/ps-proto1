@@ -20,20 +20,100 @@
 
         <script type="text/template" id="tmpl-main">
           <div class="row">
-              <div id="teaser" class="span12 well">
-                <div id="teaser-box" class="span5 offset6">
-                  <div class="well">
-                    <form>
-                      <label for="creditInput">What amount are you looking for?</label>
-                      <div class="input-prepend input-append">
-                        <span class="add-on">€</span>
-                        <input type="text" id="creditInput" class="input-medium" style="text-align:right" placeHolder="e.g. 1000000" /><button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i>&nbsp;Search</button>
-                      </div>
-                    </form>
-                    <small>or <a href="#learnMore">Learn more about PeerStreet</a></small>
-                  </div>
+            <div id="teaser" class="span12 well">
+
+              <div id="teaser-box" class="span5 offset6">
+                <div class="well">
+                  <form id="teaserForm">
+                    <label for="creditInput">What amount are you looking for?</label>
+                    <div class="input-prepend input-append">
+                      <span class="add-on">k€</span>
+                      <input type="number" min="10" id="creditInput" required="required" class="input-medium" style="text-align:right" placeHolder="e.g. 100" /><button type="submit" class="btn btn-primary"><i class="icon-search icon-white"></i>&nbsp;Search</button>
+                    </div>
+                  </form>
+                  <small>or <a href="#learnMore">Learn more about PeerStreet</a></small>
                 </div>
               </div>
+
+              <div id="form-box" class="span6">
+                <div class="well">
+                  <form id="realForm" class="form-horizontal">
+                    <fieldset>
+                      <p>Credit for k€<span class="credit_sum"></span></p>
+                      <div class="control-group">
+                        <label class="control-label" for="usage">Usage</label>
+                        <div class="controls">
+                          <select id="usage" name="usage"> 
+                            <option value="" selected="selected">(please select)</option>
+                            <option value="working_cap">Woring capital</option>
+                            <option value="office_equipment">Office Equipment</option>
+                            <option value="machinery">Production/Machinery/Vehicels</option>
+                            <option value="trading">Trading</option>
+                            <option value="distribution">Distribution</option>
+                            <option value="receivables">Receivables</option>
+                            <option value="refinancing">Refinancing</option>
+                            <option value="goods">Goods</option>
+                            <option value="investments">Investments</option>
+                            <option value="expansion">Expansion</option>
+                            <option value="facilities">Facilities</option>
+                            <option value="other">other</option>
+                          </select>
+                        </div>
+                      </div>
+                      <hr />
+                      <p>About your company</p>
+                      <div class="control-group">
+                        <label class="control-label" for="field">Field</label>
+                        <div class="controls">
+                          <select id="field" name="field"> 
+                            <option value="" selected="selected">(please select)</option>
+                            <option value="trading">Good Trading</option>
+                            <option value="financial">Financial Services</option>
+                            <option value="production">Production & Manufactoring</option>
+                            <option value="it">IT & Telecommunications</option>
+                            <option value="distribution">Distribution</option>
+                            <option value="other">other</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label" for="revenue">Yearly Revenue</label>
+                        <div class="controls">
+                          <select id="revenue" name="revenue"> 
+                            <option value="" selected="selected">(please select)</option>
+                            <option value="1">up to €1Mio</option>
+                            <option value="10">€1Mio to €10Mio</option>
+                            <option value="50">€10Mio to €50Mio</option>
+                            <option value="100">€50Mio to €100Mio</option>
+                            <option value="over">more than €100Mio</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label" for="location">Location</label>
+                        <div class="controls">
+                          <select id="location" name="location"> 
+                            <option value="" selected="selected">(please select)</option>
+                            <option value="Germany">Germany</option>
+                            <option value="France">France</option>
+                            <option value="Sweden">Sweden</option>
+                            <option value="Greece">Greece</option>
+                            <option value="Spain">Spain</option>
+                            <option value="EU">other EU27 Country</option>
+                            <option value="other">other Country</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Continue</button>
+                        &nbsp;<a class="back">go back</a>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+
+            </div>
           </div>
 
           <div class="row">

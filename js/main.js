@@ -22,7 +22,28 @@ $(function() {
   });
 
   var HomeView = TmplView.extend({
-     template: _.template($('#tmpl-main').html())
+     template: _.template($('#tmpl-main').html()),
+     events: {
+      "submit form#teaserForm": "_form_submit"
+     },
+
+     _form_submit: function() {
+      var $el = $(this.el);
+          $tsbx = $el.find("#teaser-box"),
+          val = Number($('#creditInput').val()),
+          $fbx = $el.find("#form-box");
+
+      $fbx.find(".credit_sum").html(val);
+
+      $tsbx.animate(
+            {"margin-left": "-" + ($tsbx.outerWidth() + 100)},
+            {duration: 1000, "easing": "swing"});
+
+      $fbx.animate(
+            {"margin-left": 100},
+            {duration: 1000, "easing": "swing"});
+        return false;
+     }
   });
 
   var AppState = Backbone.Model.extend({

@@ -13,11 +13,29 @@
 	-webkit-background-origin:border-box; /* Safari */
 	background-origin:border-box;
 	background-repeat: none;
-	height: 375px;
+	height: 400px;
 	margin-bottom: 50px;
+	overflow: hidden;
+	position: relative;
+}
+#teaser-box {
+	top: 180px;
+	position: absolute;
 }
 #teaser-box .well{
-	margin-top: 180px;
-	background: rgb(150, 150, 150) transparent; /* default fallback */
-	background: rgba(150, 150, 150, 0.35); /* nice browsers */
+	background: rgb(245, 245, 245) transparent; /* default fallback */
+	background: rgba(245, 245, 245, 0.75); /* nice browsers */
+}
+
+#form-box {
+	top: 10px;
+	position: absolute;
+	margin-left: 1000px;
+}
+#form-box .well {
+	background: rgb(245, 245, 245); /* default fallback */
+	background: rgba(245, 245, 245, 0.95); /* nice browsers */
+}
+#form-box .well .credit_sum{
+	font-weight: bold;
 }
