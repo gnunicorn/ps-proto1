@@ -17,6 +17,25 @@
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
+      <div class="modal hide" id="loginModal">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">x</button>
+          <h3>Login to PeerStreet</h3>
+        </div>
+        <div class="modal-body">
+          <form method="get" action='' name="login_form">
+            <p><input type="text" class="span3" name="eid" id="email" placeholder="Email" required="required"></p>
+            <p><input type="password" class="span3" name="passwd" placeholder="Password"></p>
+            <p><button type="submit" class="btn btn-primary">Sign in</button>
+              <a href="#">Forgot Password?</a>
+            </p>
+          </form>
+        </div>
+        <div class="modal-footer">
+          New To PeerStreet?
+          <a href="#" class="btn btn-primary">Register</a>
+        </div>
+      </div>
         <script type="text/template" id="tmpl-items">
           <h3><%= matches.length%> offers found:</h3>
           <div class="span11">
@@ -28,18 +47,39 @@
               </div>
               <% _.each(matches, function(item, idx) {%>
                 <div class="row-fluid result-item <%= idx % 2? 'even': 'odd' %>">
-                  <div class="span5">
-                    <h4><%= item.match.get("title") %></h4>
-                  </div>
-                  <div class="span2">
-                    <%= item.monthly.toFixed(2) %>
-                  </div>
-                  <div class="span2">
-                    <%= item.total.toFixed(2) %>
-                  </div>
-                  <div class="span3 actions">
-                    <a href="#" class="btn btn-primary">Details</a>
-                  </div>
+                  <% if (login) {%>
+                    <div class="span5">
+                      <h4><%= item.match.get("title") %></h4>
+                      by: <img src="img/content/<%= item.match.get('icon') %>">
+                    </div>
+                    <div class="span2">
+                      <%= item.monthly.toFixed(2) %>
+                    </div>
+                    <div class="span2">
+                      <%= item.total.toFixed(2) %>
+                    </div>
+                    <div class="span3 actions">
+                      <a data-toggle="modal" href="#loginModal" class="btn">Details</a>
+
+                      <a data-toggle="modal" href="#loginModal" class="btn btn-primary">Request offer</a>
+                    </div>
+                  <% } else { %>
+                    <div class="span5">
+                      <h4><%= item.match.get("title") %></h4>
+                      by: <small>(Undisclosed) please <a data-toggle="modal" href="#loginModal">login</a> to see more.</small>
+                    </div>
+                    <div class="span2">
+                      <%= item.monthly.toFixed(2) %>
+                    </div>
+                    <div class="span2">
+                      <%= item.total.toFixed(2) %>
+                    </div>
+                    <div class="span3 actions">
+                      <a data-toggle="modal" href="#loginModal" class="btn">Details</a>
+
+                      <a data-toggle="modal" href="#loginModal" class="btn btn-primary">Request offer</a>
+                    </div>
+                  <% } %>
                 </div>
               <% }); %>
             </div>
@@ -266,9 +306,9 @@
               <a class="brand" href="#">PeerStreet</a>
               <ul class="nav" id="main-nav">
               </ul>
-              </div>
-              <ul class="nav pull-right" id="login-bar">
-                </ul>
+              <ul class="nav pull-right" id="login-bar"> 
+                <li><a href="#loginModal" data-toggle="modal" >Login</a></li>
+              </ul>
             </div>
           </div>
         </div>

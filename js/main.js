@@ -70,6 +70,19 @@ $(function() {
     }
   });
 
+  var LoginView = Backbone.View.extend({
+    events: {
+      "submit form": "_form_submit"
+    },
+    _form_submit: function(ev) {
+      console.log("called");
+      this.options.app.state.set(
+          {"login": $(ev.currentTarget).find("#email").val()});
+      $('.modal').modal("hide");
+      return false;
+    }
+  });
+
   // Util
   var TmplView = Backbone.View.extend({
 
@@ -99,14 +112,45 @@ $(function() {
       "submit form#realForm": "_real_form_submit"
      },
 
+     initialize: function() {
+      var view = this;
+      this.form_data = new Backbone.Model({});
+
+      this.options.app.state.on("change", $.proxy(this._render_items, this));
+      this.form_data.on("change:credit", function(itm, val) {
+        var $el = $(view.el);
+        $el.find(".credit_sum").html(val);
+        $el.find("#credit-inp").val(val);
+      });
+     },
+
+     _render_items: function() {
+      var credit = this.form_data.get("credit");
+      if (!credit) return; // nothing to do yet
+
+      var matches = this.options.app.offers.find_matches(this.form_data.attributes);
+
+      if (matches.length === 0) {
+        $('#results-wrapper #wrapped').html('<div class="alert alert-error offset2 span6">No results found</div>');
+      } else {
+        var real_credit = 1000 * credit,
+            span = this.form_data.get("lent-term") / 12;
+        matches = matches.map(function(item) {
+          var offer = item.get_interest(real_credit, span);
+          offer.match = item;
+          return offer;
+        });
+        $('#results-wrapper #wrapped').html(
+          this.tmpl_items({matches: matches, login:this.options.app.state.get("login")}));
+      }
+     },
+
      _pre_form_submit: function() {
       var $el = $(this.el),
           $tsbx = $el.find("#teaser-box"),
-          val = Number($('#creditInput').val()),
           $fbx = $el.find("#form-box");
 
-      $fbx.find(".credit_sum").html(val);
-      $fbx.find("#credit-inp").val(val);
+      this.form_data.set("credit", Number($('#creditInput').val()));
 
       $tsbx.animate(
             {"margin-left": "-" + ($tsbx.outerWidth() + 100)},
@@ -130,34 +174,19 @@ $(function() {
         var $n = $(n);
         inps[$n.attr("name")] = $n.val();
       });
-      var matches = this.options.app.offers.find_matches(inps);
-      console.log(matches);
+      this.form_data.set(inps);
+      this._render_items();
 
-      if (matches.length === 0) {
-        $('#results-wrapper #wrapped').html('<div class="alert alert-error offset2 span6">No results found</div>');
-      } else {
-        var credit = 1000 * inps.credit,
-            span = inps["lent-term"] / 12;
-        matches = matches.map(function(item) {
-          var offer = item.get_interest(credit, span);
-          offer.match = item;
-          return offer;
-        });
-        console.log(matches);
-        $('#results-wrapper #wrapped').html(this.tmpl_items({matches: matches}));
-      }
-
-       $('html, body').animate({
+      $('html, body').animate({
            scrollTop: $('#results-wrapper').offset().top - 150
-       }, 1500);
+      }, 1500);
       return false;
-
     }
   });
 
   var AppState = Backbone.Model.extend({
     defaults: {
-
+      "login": false
     }
   });
 
@@ -178,6 +207,9 @@ $(function() {
       app.progress = 10;
 
       app.offers = new DebtOffers({});
+
+      app.loginView = new LoginView({app: app,
+        el: $('#loginModal')});
 
     },
 

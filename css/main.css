@@ -43,8 +43,8 @@
 #results-wrapper {
 	display: none;
 	overflow: hidden;
-	overflow-x: scroll;
-	height: 350px;
+	min-height: 350px;
+	margin-bottom: 50px;
 }
 
 .result-item {
