@@ -63,7 +63,6 @@ $(function() {
     url:  "data/offers.js",
     find_matches: function(query){
       var cleaned_query = convert_input(query);
-      console.log(cleaned_query);
       return this.filter(function(item) {
         return item.match(cleaned_query);
       });
@@ -75,7 +74,6 @@ $(function() {
       "submit form": "_form_submit"
     },
     _form_submit: function(ev) {
-      console.log("called");
       this.options.app.state.set(
           {"login": $(ev.currentTarget).find("#email").val()});
       $('.modal').modal("hide");
