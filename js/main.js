@@ -3,6 +3,19 @@ $(function() {
 
   var DebtOffer = Backbone.Model.extend({
 
+    get_interest: function(sum, span) {
+      var interest = this.get("interest") || 0.0541;
+          abs_int = interest + 1,
+          span_abs = Math.pow(abs_int, span),
+          total_per_span = sum * ( (interest * span_abs) /  (span_abs -1)),
+          total = total_per_span * span;
+
+      return {total: total,
+              effective: 5.432,
+              interest: interest,
+              monthly: total_per_span/ 12};
+    },
+
     match: function(inp) {
       var restrictions = this.get("restrictions");
       if (!restrictions || restrictions.length === 0) return true;
@@ -79,6 +92,8 @@ $(function() {
 
   var HomeView = TmplView.extend({
      template: _.template($('#tmpl-main').html()),
+     tmpl_items: _.template($('#tmpl-items').html()),
+
      events: {
       "submit form#teaserForm": "_pre_form_submit",
       "submit form#realForm": "_real_form_submit"
@@ -108,14 +123,35 @@ $(function() {
           $frm = $(ev.currentTarget),
           inps = {};
 
+      $('#results-wrapper #wrapped').html('<div class="alert alert-searching offset2 span6">Searching</div>');
+      $('#results-wrapper').slideDown();
+
       _.each($frm.find(":input"), function(n, i) {
         var $n = $(n);
         inps[$n.attr("name")] = $n.val();
       });
-      console.log(inps);
       var matches = this.options.app.offers.find_matches(inps);
       console.log(matches);
+
+      if (matches.length === 0) {
+        $('#results-wrapper #wrapped').html('<div class="alert alert-error offset2 span6">No results found</div>');
+      } else {
+        var credit = 1000 * inps.credit,
+            span = inps["lent-term"] / 12;
+        matches = matches.map(function(item) {
+          var offer = item.get_interest(credit, span);
+          offer.match = item;
+          return offer;
+        });
+        console.log(matches);
+        $('#results-wrapper #wrapped').html(this.tmpl_items({matches: matches}));
+      }
+
+       $('html, body').animate({
+           scrollTop: $('#results-wrapper').offset().top - 150
+       }, 1500);
       return false;
+
     }
   });
 

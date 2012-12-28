@@ -17,6 +17,34 @@
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
     </head>
     <body>
+        <script type="text/template" id="tmpl-items">
+          <h3><%= matches.length%> offers found:</h3>
+          <div class="span11">
+            <div class="container-fluid">
+              <div class="row-fluid">
+                <div class="offset5 span2">Monthly</div>
+                <div class="span2">Total</div>
+
+              </div>
+              <% _.each(matches, function(item, idx) {%>
+                <div class="row-fluid result-item <%= idx % 2? 'even': 'odd' %>">
+                  <div class="span5">
+                    <h4><%= item.match.get("title") %></h4>
+                  </div>
+                  <div class="span2">
+                    <%= item.monthly %>
+                  </div>
+                  <div class="span2">
+                    <%= item.total %>
+                  </div>
+                  <div class="span3 actions">
+                    <a href="#" class="btn btn-primary">Details</a>
+                  </div>
+                </div>
+              <% }); %>
+            </div>
+          </div>
+        </script>
 
         <script type="text/template" id="tmpl-main">
           <div class="row">
@@ -65,12 +93,11 @@
                         <label class="control-label" for="lent-term">Lent Term</label>
                         <div class="controls">
                           <select id="lent-term" name="lent-term"> 
-                            <option value="0">any</option>
                             <option value="12">12 months (1yr)</option>
                             <option value="24">24 months (2yrs)</option>
                             <option value="36">36 months (3yrs)</option>
                             <option value="48">48 months (4yrs)</option>
-                            <option value="60">60 months (5yrs)</option>
+                            <option value="60" selected="selected">60 months (5yrs)</option>
                             <option value="72">72 months (6yrs)</option>
                             <option value="84">84 months (7yrs)</option>
                             <option value="96">96 months (8yrs)</option>
@@ -124,7 +151,7 @@
                         </div>
                       </div>
                       <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">Continue</button>
+                        <button type="submit" class="btn btn-primary">Show</button>
                         &nbsp;<a class="back">go back</a>
                       </div>
                     </fieldset>
@@ -132,6 +159,11 @@
                 </div>
               </div>
 
+            </div>
+          </div>
+
+          <div class="row" id="results-wrapper">
+            <div id="wrapped" class="span12">
             </div>
           </div>
 

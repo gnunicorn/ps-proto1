@@ -39,3 +39,21 @@
 #form-box .well .credit_sum{
 	font-weight: bold;
 }
+
+#results-wrapper {
+	display: none;
+	overflow: hidden;
+	overflow-x: scroll;
+	height: 350px;
+}
+
+.result-item {
+	padding: 15px;
+}
+.result-item.odd {
+	background-color: #eee;
+}
+
+.result-item .actions {
+	text-align: center;
+}
