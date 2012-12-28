@@ -38,6 +38,7 @@
               <div id="form-box" class="span6">
                 <div class="well">
                   <form id="realForm" class="form-horizontal">
+                    <input type="hidden" id="credit-inp" name="credit" />
                     <fieldset>
                       <p>Credit for k€<span class="credit_sum"></span></p>
                       <div class="control-group">
@@ -57,6 +58,24 @@
                             <option value="expansion">Expansion</option>
                             <option value="facilities">Facilities</option>
                             <option value="other">other</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="control-group">
+                        <label class="control-label" for="lent-term">Lent Term</label>
+                        <div class="controls">
+                          <select id="lent-term" name="lent-term"> 
+                            <option value="0">any</option>
+                            <option value="12">12 months (1yr)</option>
+                            <option value="24">24 months (2yrs)</option>
+                            <option value="36">36 months (3yrs)</option>
+                            <option value="48">48 months (4yrs)</option>
+                            <option value="60">60 months (5yrs)</option>
+                            <option value="72">72 months (6yrs)</option>
+                            <option value="84">84 months (7yrs)</option>
+                            <option value="96">96 months (8yrs)</option>
+                            <option value="108">108 months (9yrs)</option>
+                            <option value="120">120 months (10yrs)</option>
                           </select>
                         </div>
                       </div>

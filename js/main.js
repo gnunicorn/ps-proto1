@@ -1,6 +1,62 @@
 
 $(function() {
 
+  var DebtOffer = Backbone.Model.extend({
+
+    match: function(inp) {
+      var restrictions = this.get("restrictions");
+      if (!restrictions || restrictions.length === 0) return true;
+      var match = _.find(restrictions, function(res) {
+        var attr = res[0],
+            comparator = res[1],
+            val = res[2];
+        if (!inp[attr]) return false;
+
+        if (comparator === "equals") {
+          return inp[attr] != val;
+        }
+
+        if (comparator === "lte") {
+          return val >= inp[attr];
+        }
+
+        if (comparator === "gte") {
+          return val <= inp[attr];
+        }
+      });
+      return !match;
+    }
+
+  });
+
+  function convert_input(attrs) {
+    // convert numbers
+    var ret_val = {};
+    _.each(["credit", "revenue", "lent-term"], function(field){
+      if (attrs[field]) {
+        attrs[field] = Number(attrs[field]);
+      }
+    });
+    _.each(_.keys(attrs), function(item) {
+      var val = attrs[item];
+      if (!val || val.length === 0) return;
+      ret_val[item] = val;
+    });
+    return ret_val;
+  }
+
+  var DebtOffers = Backbone.Collection.extend({
+    model: DebtOffer,
+    url:  "data/offers.js",
+    find_matches: function(query){
+      var cleaned_query = convert_input(query);
+      console.log(cleaned_query);
+      return this.filter(function(item) {
+        return item.match(cleaned_query);
+      });
+    }
+  });
+
   // Util
   var TmplView = Backbone.View.extend({
 
@@ -24,16 +80,18 @@ $(function() {
   var HomeView = TmplView.extend({
      template: _.template($('#tmpl-main').html()),
      events: {
-      "submit form#teaserForm": "_form_submit"
+      "submit form#teaserForm": "_pre_form_submit",
+      "submit form#realForm": "_real_form_submit"
      },
 
-     _form_submit: function() {
-      var $el = $(this.el);
+     _pre_form_submit: function() {
+      var $el = $(this.el),
           $tsbx = $el.find("#teaser-box"),
           val = Number($('#creditInput').val()),
           $fbx = $el.find("#form-box");
 
       $fbx.find(".credit_sum").html(val);
+      $fbx.find("#credit-inp").val(val);
 
       $tsbx.animate(
             {"margin-left": "-" + ($tsbx.outerWidth() + 100)},
@@ -43,7 +101,22 @@ $(function() {
             {"margin-left": 100},
             {duration: 1000, "easing": "swing"});
         return false;
-     }
+     },
+
+     _real_form_submit: function(ev) {
+      var $el = $(this.el),
+          $frm = $(ev.currentTarget),
+          inps = {};
+
+      _.each($frm.find(":input"), function(n, i) {
+        var $n = $(n);
+        inps[$n.attr("name")] = $n.val();
+      });
+      console.log(inps);
+      var matches = this.options.app.offers.find_matches(inps);
+      console.log(matches);
+      return false;
+    }
   });
 
   var AppState = Backbone.Model.extend({
@@ -68,6 +141,8 @@ $(function() {
       app.main = $('#main');
       app.progress = 10;
 
+      app.offers = new DebtOffers({});
+
     },
 
     show_modal: function(title, content) {
@@ -91,19 +166,13 @@ $(function() {
     start: function() {
       var me = this;
       me._update_loading_progress(99);
-      Backbone.history.start();
-      /*
       function next() {
-        me._update_loading_progress(20);
+        me._update_loading_progress(50);
       }
-      return $.when(this.profiles.fetch().then(next),
-            this.books.fetch().then(next),
-            this.videos.fetch().then(next),
-            this.recommendations.fetch().then(next)
+      return $.when(this.offers.fetch().then(next)
           ).then(function() {
             Backbone.history.start();
           });
-      */
     },
 
 
@@ -117,7 +186,7 @@ $(function() {
         }
         this.main.html(this.homeView.el);
         this.trigger("pageLoaded", "home");
-    },
+    }
 
   });
 
